@@ -278,3 +278,17 @@ h1 {
     opacity: 0.3;
     letter-spacing: 1px;
 }
+/* Ağırlaştırılmış melodi için yavaş dönen plak */
+.record.playing {
+    animation: slowSpin 6s linear infinite; /* Ritmle uyumlu olması için yavaşlattık */
+}
+
+@keyframes slowSpin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Dehliz atmosferini yansıtan renk tonu */
+:root {
+    --accent: #d4a373; /* Golden Brown'un rengi */
+}
