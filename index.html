@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Berkay Alay — Giriş</title>
+    <title>Berkay Alay — Giriş Kapısı</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;1,300&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;1,300&family=Inter:wght@300;400&family=Mrs+Saint+Delafield&display=swap" rel="stylesheet">
 </head>
-<body>
+<body class="hub-page">
 
     <div id="introScreen">
         <div class="introInner">
@@ -15,17 +15,20 @@
                 İnsan en çok sustuklarından ibarettir...<br>
                 <span>Sessizliğe dokun ve içeri gir.</span>
             </p>
-            <button id="introBtn">Devam Etmek İçin Dokun</button>
+            <button id="introBtn">devam etmek için dokun</button>
         </div>
     </div>
 
+    <div class="cursor-dot" data-cursor-dot></div>
+    <div class="cursor-outline" data-cursor-outline></div>
+
     <audio id="bgMusic" src="muzik.mp3" loop></audio>
-    <div class="bg-silhouette"></div> <div class="grain"></div> <div class="spotlight"></div> <div id="musicDisc" class="music-control"></div>
+    <div class="bg-silhouette"></div> <div class="grain"></div> <div class="spotlight"></div> <div id="musicDisc" class="music-control" title="Müziği Durdur/Başlat"></div>
 
     <main id="main-content">
         <header class="profile-header">
             <div class="profile-ring">
-                <img src="https://berkayalay53.github.io/profile.jpg" alt="Berkay Alay" class="author-photo">
+                <img src="https://berkayalay53.github.io/profile.jpg" alt="Berkay Alay" class="authorPhoto">
             </div>
             <h1>Berkay Alay</h1>
             <p class="bio">
@@ -41,13 +44,13 @@
 
             <div class="social-grid">
                 <a href="https://www.instagram.com/berkayalay.53/" target="_blank" class="btn btn-secondary">Instagram</a>
-                <a href="http://googleusercontent.com/spotify.com/2" target="_blank" class="btn btn-secondary">Spotify</a>
+                <a href="http://googleusercontent.com/spotify.com/3" target="_blank" class="btn btn-secondary">Spotify</a>
                 <a href="https://discord.com/users/1477376002765361393" target="_blank" class="btn btn-secondary">Discord</a>
             </div>
         </nav>
 
         <footer>
-            <p class="trace-text">Sessizliğin etrafında yazılmış metinler.</p>
+            <div class="signature">Berkay Alay</div> <p class="trace-text">Sessizliğin etrafında yazılmış metinler.</p>
         </footer>
     </main>
 
@@ -57,36 +60,39 @@
         const music = document.getElementById('bgMusic');
         const disc = document.getElementById('musicDisc');
         const main = document.getElementById('main-content');
-
-        // Fener Efekti Takibi
         const spotlight = document.querySelector('.spotlight');
+
+        // 1. Fener Efekti Takibi (Main'den)
         document.addEventListener('mousemove', (e) => {
             spotlight.style.setProperty('--x', e.clientX + 'px');
             spotlight.style.setProperty('--y', e.clientY + 'px');
         });
 
-        // Giriş Ritüeli
+        // 2. Hayalet İmleç Takibi (Main'den)
+        const cursorDot = document.querySelector('[data-cursor-dot]');
+        const cursorOutline = document.querySelector('[data-cursor-outline]');
+        window.addEventListener("mousemove", (e) => {
+            const posX = e.clientX; const posY = e.clientY;
+            cursorDot.style.left = `${posX}px`; cursorDot.style.top = `${posY}px`;
+            cursorOutline.animate({ left: `${posX}px`, top: `${posY}px` }, { duration: 500, fill: "forwards" });
+        });
+
+        // 3. Giriş Ritüeli
         btn.addEventListener('click', () => {
             music.volume = 0.3; // Kaptanımın istediği kısık ses
             music.play();
             disc.classList.add('playing');
-            intro.classList.add('hide');
+            intro.classList.add('hide'); // Perde kapansın (Main'deki blur efektiyle)
             main.classList.add('show');
-            
+            document.body.style.overflow = 'auto'; 
             setTimeout(() => { intro.remove(); }, 1000);
         });
 
-        // Plak Kontrolü
+        // 4. Plak Kontrolü
         disc.addEventListener('click', () => {
-            if (music.paused) {
-                music.play();
-                disc.classList.add('playing');
-            } else {
-                music.pause();
-                disc.classList.remove('playing');
-            }
+            if (music.paused) { music.play(); disc.classList.add('playing'); }
+            else { music.pause(); disc.classList.remove('playing'); }
         });
     </script>
 </body>
-</html>
 </html>
