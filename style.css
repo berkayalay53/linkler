@@ -11,6 +11,7 @@
     --muted: #bcb6aa;
     --accent: #d4a373;
     --border: rgba(255, 255, 255, 0.08);
+    --serif: "Crimson Pro", serif;
 }
 
 body {
@@ -21,18 +22,17 @@ body {
     overflow: hidden; /* Girişte kilitli */
 }
 
-/* 1. HAYALET SİLUET (Ana Sayfadaki Gibi) */
+/* 1. HAYALET SİLUET (Main'den) */
 .bg-silhouette {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    z-index: 1; pointer-events: none;
+    z-index: 999; pointer-events: none; /* En önde cam gibi */
     background-image: url('./wturuncusaçlıkız.jpg');
     background-size: cover; background-position: center;
-    opacity: 0.15; /* Hayalet etkisi */
-    mix-blend-mode: screen;
+    opacity: 0.15; mix-blend-mode: screen;
     filter: grayscale(100%) contrast(1.5);
 }
 
-/* 2. DOKULAR */
+/* 2. DOKULAR (Grain & Spotlight - Main'den) */
 .grain {
     position: fixed; inset: 0; pointer-events: none; opacity: .16;
     mix-blend-mode: overlay; z-index: 5;
@@ -40,60 +40,66 @@ body {
 }
 
 .spotlight {
-    position: fixed; inset: 0; pointer-events: none; z-index: 4;
+    position: fixed; inset: 0; pointer-events: none; z-index: 9990;
     background: radial-gradient(circle 250px at var(--x, 50%) var(--y, 50%), rgba(212, 163, 115, 0.08), transparent 60%);
+    mix-blend-mode: screen; transition: background 0.1s ease;
 }
 
-/* 3. GİRİŞ PERDESİ */
+/* 3. GİRİŞ PERDESİ (Main'deki Blur Efektiyle) */
 #introScreen {
-    position: fixed; inset: 0; background: var(--bg); z-index: 100;
+    position: fixed; inset: 0; background: var(--bg); z-index: 10000;
     display: flex; align-items: center; justify-content: center;
-    transition: opacity 1s ease, filter 1s ease;
 }
 
-#introScreen.hide { opacity: 0; filter: blur(10px); pointer-events: none; }
+#introScreen.hide { animation: introDisappear .9s ease forwards; }
+@keyframes introDisappear { to { opacity: 0; filter: blur(8px); } }
 
-.introInner { text-align: center; padding: 20px; }
-.introText { font-family: 'Crimson Pro', serif; font-size: 24px; margin-bottom: 30px; line-height: 1.5; }
+.introText { font-family: var(--serif); font-size: 26px; text-align: center; line-height: 1.6; margin-bottom: 32px; }
 .introText span { color: var(--accent); }
 
 #introBtn {
-    background: transparent; border: 1px solid var(--border); color: var(--muted);
-    padding: 12px 25px; border-radius: 50px; cursor: pointer; text-transform: uppercase;
-    letter-spacing: 2px; font-size: 10px; transition: all 0.4s ease;
+    font-size: 12px; letter-spacing: 1.4px; text-transform: uppercase;
+    background: rgba(255, 255, 255, .02); border: 1px solid rgba(255, 255, 255, .18);
+    color: rgba(233, 230, 223, .55); padding: 11px 22px; border-radius: 999px;
+    cursor: pointer; transition: all .35s ease; display: block; margin: 0 auto;
 }
+#introBtn:hover { border-color: var(--accent); color: var(--text); background: rgba(212, 163, 115, 0.08); }
 
-#introBtn:hover { border-color: var(--accent); color: var(--text); background: rgba(212, 163, 115, 0.05); }
-
-/* 4. PLAK (Müzik Kontrolü) */
+/* 4. PLAK (Müzik Kontrolü - Main Nizamı) */
 .music-control {
-    position: fixed; bottom: 20px; right: 20px; width: 50px; height: 50px;
-    border-radius: 50%; border: 1px solid var(--accent); z-index: 50;
-    background-image: url('https://berkayalay53.github.io/profile.jpg'); /* Profil resmin plak olsun */
-    background-size: cover; cursor: pointer; box-shadow: 0 0 15px rgba(0,0,0,0.5);
+    position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px;
+    border-radius: 50%; border: 2px solid var(--accent); z-index: 9995;
+    background-image: url('https://berkayalay53.github.io/profile.jpg');
+    background-size: cover; cursor: pointer; box-shadow: 0 0 20px rgba(0,0,0,0.6);
 }
-
-.music-control.playing { animation: spin 5s linear infinite; }
+.music-control.playing { animation: spin 6s linear infinite; } /* Golden Brown için yavaşladı */
 @keyframes spin { 100% { transform: rotate(360deg); } }
 
-/* 5. İÇERİK */
-#main-content {
-    position: relative; z-index: 10; max-width: 400px; width: 90%;
-    margin: 0 auto; padding: 50px 0; text-align: center;
-    opacity: 0; transform: translateY(20px); transition: all 1.2s ease;
+/* 5. PROFİL FOTOĞRAFI: MÜHÜR EFEKTİ (Main'den) */
+.authorPhoto {
+    width: 140px; height: 140px; border-radius: 50%; object-fit: cover;
+    margin-bottom: 1.5rem; border: 2px solid var(--accent); padding: 4px;
+    filter: grayscale(100%) brightness(0.9);
+    transition: all 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+.authorPhoto:hover {
+    filter: grayscale(0%) brightness(1.05); border-color: #e9d8a6;
+    box-shadow: 0 0 25px rgba(212, 163, 115, 0.4); transform: scale(1.05);
 }
 
+/* 6. İÇERİK VE BUTONLAR (Hub Yapısı) */
+#main-content {
+    position: relative; z-index: 10; max-width: 400px; width: 90%;
+    margin: 0 auto; padding: 60px 0; text-align: center;
+    opacity: 0; transform: translateY(20px); transition: all 1.2s ease;
+}
 #main-content.show { opacity: 1; transform: translateY(0); }
 
-.profile-ring { width: 110px; height: 110px; margin: 0 auto 20px; border-radius: 50%; border: 1px solid var(--border); padding: 5px; }
-.author-photo { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; filter: grayscale(50%); }
+h1 { font-family: var(--serif); font-weight: 300; letter-spacing: 2px; font-size: 1.8rem; margin-bottom: 15px; }
+.bio { font-family: var(--serif); font-style: italic; color: var(--muted); font-size: 1rem; line-height: 1.6; margin-bottom: 30px; }
 
-h1 { font-family: 'Crimson Pro', serif; font-weight: 300; letter-spacing: 2px; font-size: 1.8rem; margin-bottom: 15px; }
-.bio { font-family: 'Crimson Pro', serif; font-style: italic; color: var(--muted); font-size: 1rem; line-height: 1.6; margin-bottom: 30px; }
-
-/* 6. BUTONLAR */
 .links-container { display: flex; flex-direction: column; gap: 12px; }
-.btn { text-decoration: none; padding: 15px; border-radius: 50px; font-size: 0.8rem; letter-spacing: 1px; transition: all 0.3s ease; border: 1px solid var(--border); }
+.btn { text-decoration: none; padding: 15px; border-radius: 50px; font-size: 0.8rem; letter-spacing: 1px; transition: all 0.3s ease; border: 1px solid var(--border); text-transform: uppercase; }
 .btn-primary { color: var(--accent); border-color: var(--accent); }
 .btn-primary:hover { background: var(--accent); color: #000; }
 .social-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
@@ -105,4 +111,18 @@ h1 { font-family: 'Crimson Pro', serif; font-weight: 300; letter-spacing: 2px; f
 .divider::before { content: ""; position: absolute; top: 50%; left: 0; width: 100%; height: 1px; background: var(--border); z-index: -1; }
 .divider span { background: var(--bg); padding: 0 15px; font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 2px; }
 
-.trace-text { margin-top: 40px; font-size: 0.7rem; opacity: 0.3; font-style: italic; }
+/* 7. ISLAK İMZA (Main'den) */
+.signature {
+    font-family: 'Mrs Saint Delafield', cursive; font-size: 3rem; color: var(--accent);
+    display: block; width: fit-content; margin: 20px auto 10px; transform: rotate(-5deg);
+    clip-path: inset(0 100% 0 0); animation: writeSignature 3s cubic-bezier(0.5, 0, 0.5, 1) forwards 2s; 
+}
+@keyframes writeSignature { to { clip-path: inset(0 0 0 0); } }
+
+.trace-text { font-size: 0.7rem; opacity: 0.3; font-style: italic; }
+
+/* HAYALET İMLEÇ (Main'den) */
+.cursor-dot, .cursor-outline { position: fixed; top: 0; left: 0; transform: translate(-50%, -50%); border-radius: 50%; z-index: 9999; pointer-events: none; }
+.cursor-dot { width: 5px; height: 5px; background-color: var(--accent); }
+.cursor-outline { width: 30px; height: 30px; border: 1px solid rgba(212, 163, 115, 0.5); }
+@media (max-width: 900px) { .cursor-dot, .cursor-outline { display: none; } }
