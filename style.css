@@ -80,8 +80,9 @@ body {
 .music-control {
     position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px;
     border-radius: 50%; border: 2px solid var(--accent); z-index: 9995;
-    background-image: url('https://berkayalay53.github.io/profile.jpg');
-    background-size: cover; cursor: pointer; box-shadow: 0 0 20px rgba(0,0,0,0.6);
+background-image: url('./wturuncusaçlıkız.jpg') !important;
+    background-position: center !important;
+    background-size: cover !important;
 }
 .music-control.playing { animation: spin 6s linear infinite; } /* Golden Brown için yavaşladı */
 @keyframes spin { 100% { transform: rotate(360deg); } }
