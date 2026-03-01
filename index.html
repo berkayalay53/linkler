@@ -10,15 +10,21 @@
 <body>
 
     <div id="entry-curtain">
-        <div class="curtain-content">
-            <p class="blink">Sessizliğe Dokun</p>
-        </div>
+    <div class="curtain-content">
+        <p class="blink">Sessizliğe Dokun</p>
     </div>
+</div>
 
-    <audio id="dehliz-audio" src="muzik.mp3" loop></audio>
+<audio id="dehliz-audio" src="Golden Brown (Slowed Down Version) (mp3cut.net).mp3" loop></audio>
 
-    <div class="grain"></div>
-    <div class="spotlight"></div>
+<main id="main-content">
+    <div class="music-player">
+        <div class="record">
+            <div class="record-center"></div>
+        </div>
+        <p class="song-info">Golden Brown — (Slowed)</p>
+    </div>
+</main>
 
     <main id="main-content">
         <header class="profile-header">
@@ -85,6 +91,22 @@
                 curtain.style.display = 'none';
             }, 1500);
         });
+        const curtain = document.getElementById('entry-curtain');
+const audio = document.getElementById('dehliz-audio');
+const mainContent = document.getElementById('main-content');
+const record = document.querySelector('.record');
+
+// Kaptanımın istediği o kısık ses seviyesi
+audio.volume = 0.3; 
+
+curtain.addEventListener('click', () => {
+    audio.play();
+    curtain.classList.add('fade-out');
+    mainContent.classList.add('fade-in');
+    record.classList.add('playing');
+    
+    setTimeout(() => { curtain.style.display = 'none'; }, 1500);
+});
     </script>
 </body>
 </html>
