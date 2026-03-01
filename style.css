@@ -1,7 +1,15 @@
 /* === ANA SAYFANIN RUHUNU TAŞIYAN HUB CSS === */
 /* === MOBİLDEKİ MAVİ TIKLAMA IŞIĞINI KALDIR === */
-* {
-  -webkit-tap-highlight-color: transparent;
+/* === SEÇİM (KOPYALAMA) RENGİ === */
+::selection {
+  background: #d4a373; /* Pas rengi */
+  color: #000;         /* Yazı rengi siyah olsun ki okunsun */
+}
+
+/* Firefox için uyumluluk */
+::-moz-selection {
+  background: #d4a373;
+  color: #000;
 }
 * {
     margin: 0; padding: 0; box-sizing: border-box;
