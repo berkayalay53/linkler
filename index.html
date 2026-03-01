@@ -2,18 +2,28 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Berkay Alay — Giriş</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Berkay Alay — Giriş Kapısı</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;1,300&family=Inter:wght@300;400&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="overlay"></div>
-    
-    <main class="hub-container">
-        <header class="profile-section">
+
+    <div id="entry-curtain">
+        <div class="curtain-content">
+            <p class="blink">Sessizliğe Dokun</p>
+        </div>
+    </div>
+
+    <audio id="dehliz-audio" src="muzik.mp3" loop></audio>
+
+    <div class="grain"></div>
+    <div class="spotlight"></div>
+
+    <main id="main-content">
+        <header class="profile-header">
             <div class="profile-ring">
-                <img src="https://berkayalay53.github.io/profile.jpg" alt="Berkay Alay" class="profile-img">
+                <img src="https://berkayalay53.github.io/profile.jpg" alt="Berkay Alay" class="author-photo">
             </div>
             <h1>Berkay Alay</h1>
             <p class="bio">
@@ -22,7 +32,15 @@
             </p>
         </header>
 
-        <nav class="links-section">
+        <nav class="links-container">
+            
+            <div class="music-player">
+                <div class="record">
+                    <div class="record-center"></div>
+                </div>
+                <p class="song-info">Sessizliğin Melodisi</p>
+            </div>
+
             <a href="https://berkayalay53.github.io" class="btn btn-primary">Yazarın Dehlizine Gir</a>
             
             <div class="divider"><span>Sosyal Limanlar</span></div>
@@ -38,5 +56,35 @@
             <p class="trace-text">Sessizliğin etrafında yazılmış metinler.</p>
         </footer>
     </main>
+
+    <script>
+        const curtain = document.getElementById('entry-curtain');
+        const audio = document.getElementById('dehliz-audio');
+        const mainContent = document.getElementById('main-content');
+        const record = document.querySelector('.record');
+
+        // Ses seviyesini 0.3 (kısık) yapalım
+        audio.volume = 0.3;
+
+        // Karanlık perdeye tıkladığı an ritüel başlar
+        curtain.addEventListener('click', () => {
+            // 1. Müziği başlat
+            audio.play();
+
+            // 2. Perdeyi animasyonla kaldır
+            curtain.classList.add('fade-out');
+
+            // 3. Ana içeriği animasyonla getir
+            mainContent.classList.add('fade-in');
+
+            // 4. Plağı döndür
+            record.classList.add('playing');
+
+            // 5. Perdeyi tamamen yok et (tıklamaları engellemesin diye)
+            setTimeout(() => {
+                curtain.style.display = 'none';
+            }, 1500);
+        });
+    </script>
 </body>
 </html>
