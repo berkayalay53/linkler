@@ -1,4 +1,4 @@
-/* === HUB ANA CSS === */
+/* === ANA SAYFANIN RUHUNU TAŞIYAN HUB CSS === */
 
 * {
     margin: 0; padding: 0; box-sizing: border-box;
@@ -9,107 +9,100 @@
     --bg: #0f1113;
     --text: #e9e6df;
     --muted: #bcb6aa;
-    --accent: #d4a373; /* Golden Brown Tonu */
+    --accent: #d4a373;
     --border: rgba(255, 255, 255, 0.08);
-    --transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-html, body {
+body {
     background-color: var(--bg);
     color: var(--text);
     font-family: 'Inter', sans-serif;
     min-height: 100vh;
-    overflow-x: hidden;
+    overflow: hidden; /* Girişte kilitli */
 }
 
-/* DOKULAR */
-.grain {
+/* 1. HAYALET SİLUET (Ana Sayfadaki Gibi) */
+.bg-silhouette {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3%3Ffilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-    opacity: 0.03; pointer-events: none; z-index: 5;
+    z-index: 1; pointer-events: none;
+    background-image: url('./wturuncusaçlıkız.jpg');
+    background-size: cover; background-position: center;
+    opacity: 0.15; /* Hayalet etkisi */
+    mix-blend-mode: screen;
+    filter: grayscale(100%) contrast(1.5);
+}
+
+/* 2. DOKULAR */
+.grain {
+    position: fixed; inset: 0; pointer-events: none; opacity: .16;
+    mix-blend-mode: overlay; z-index: 5;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='260' height='260' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
 }
 
 .spotlight {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: radial-gradient(circle at center, transparent 0%, var(--bg) 90%);
-    pointer-events: none; z-index: 4;
+    position: fixed; inset: 0; pointer-events: none; z-index: 4;
+    background: radial-gradient(circle 250px at var(--x, 50%) var(--y, 50%), rgba(212, 163, 115, 0.08), transparent 60%);
 }
 
-/* PERDE */
-#entry-curtain {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background-color: var(--bg);
-    z-index: 999; display: flex; justify-content: center; align-items: center;
-    cursor: pointer; transition: opacity 1.5s ease, visibility 1.5s ease;
+/* 3. GİRİŞ PERDESİ */
+#introScreen {
+    position: fixed; inset: 0; background: var(--bg); z-index: 100;
+    display: flex; align-items: center; justify-content: center;
+    transition: opacity 1s ease, filter 1s ease;
 }
 
-.curtain-content p {
-    font-family: 'Crimson Pro', serif;
-    font-size: 1.2rem; color: var(--muted);
-    letter-spacing: 3px; font-weight: 300;
+#introScreen.hide { opacity: 0; filter: blur(10px); pointer-events: none; }
+
+.introInner { text-align: center; padding: 20px; }
+.introText { font-family: 'Crimson Pro', serif; font-size: 24px; margin-bottom: 30px; line-height: 1.5; }
+.introText span { color: var(--accent); }
+
+#introBtn {
+    background: transparent; border: 1px solid var(--border); color: var(--muted);
+    padding: 12px 25px; border-radius: 50px; cursor: pointer; text-transform: uppercase;
+    letter-spacing: 2px; font-size: 10px; transition: all 0.4s ease;
 }
 
-.blink { animation: blinker 3s linear infinite; }
-@keyframes blinker { 50% { opacity: 0.3; } }
+#introBtn:hover { border-color: var(--accent); color: var(--text); background: rgba(212, 163, 115, 0.05); }
 
-#entry-curtain.fade-out { opacity: 0; visibility: hidden; }
+/* 4. PLAK (Müzik Kontrolü) */
+.music-control {
+    position: fixed; bottom: 20px; right: 20px; width: 50px; height: 50px;
+    border-radius: 50%; border: 1px solid var(--accent); z-index: 50;
+    background-image: url('https://berkayalay53.github.io/profile.jpg'); /* Profil resmin plak olsun */
+    background-size: cover; cursor: pointer; box-shadow: 0 0 15px rgba(0,0,0,0.5);
+}
 
-/* İÇERİK */
+.music-control.playing { animation: spin 5s linear infinite; }
+@keyframes spin { 100% { transform: rotate(360deg); } }
+
+/* 5. İÇERİK */
 #main-content {
-    position: relative; z-index: 10;
-    max-width: 420px; width: 90%; margin: 0 auto;
-    padding: 60px 20px; text-align: center;
-    opacity: 0; transform: translateY(20px);
-    transition: var(--transition);
+    position: relative; z-index: 10; max-width: 400px; width: 90%;
+    margin: 0 auto; padding: 50px 0; text-align: center;
+    opacity: 0; transform: translateY(20px); transition: all 1.2s ease;
 }
 
-#main-content.fade-in { opacity: 1; transform: translateY(0); }
+#main-content.show { opacity: 1; transform: translateY(0); }
 
-.profile-ring {
-    width: 120px; height: 120px; margin: 0 auto 25px;
-    border-radius: 50%; border: 1px solid var(--border); padding: 5px;
-}
+.profile-ring { width: 110px; height: 110px; margin: 0 auto 20px; border-radius: 50%; border: 1px solid var(--border); padding: 5px; }
+.author-photo { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; filter: grayscale(50%); }
 
-.author-photo { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; filter: grayscale(20%); }
+h1 { font-family: 'Crimson Pro', serif; font-weight: 300; letter-spacing: 2px; font-size: 1.8rem; margin-bottom: 15px; }
+.bio { font-family: 'Crimson Pro', serif; font-style: italic; color: var(--muted); font-size: 1rem; line-height: 1.6; margin-bottom: 30px; }
 
-h1 { font-family: 'Crimson Pro', serif; font-weight: 300; letter-spacing: 3px; font-size: 2rem; margin-bottom: 20px; text-transform: uppercase; }
-
-.bio { font-family: 'Crimson Pro', serif; font-style: italic; color: var(--muted); font-size: 1.1rem; line-height: 1.7; margin-bottom: 40px; }
-
-/* PLAK - GOLDEN BROWN EDITION */
-.music-player { margin: 0 auto 35px; }
-
-.record {
-    width: 85px; height: 85px; margin: 0 auto 12px;
-    border-radius: 50%;
-    background: repeating-radial-gradient(circle, #111, #111 2px, #181818 3px);
-    display: flex; justify-content: center; align-items: center;
-    box-shadow: 0 0 20px rgba(0,0,0,0.6);
-}
-
-.record-center { width: 28px; height: 28px; background: var(--accent); border-radius: 50%; border: 4px solid #111; }
-
-/* Melodi yavaş olduğu için dönüşü de ağırlaştırdık */
-.record.playing { animation: slowSpin 6s linear infinite; }
-@keyframes slowSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-
-.song-info { font-size: 0.8rem; color: var(--muted); font-style: italic; letter-spacing: 1px; }
-
-/* BUTONLAR */
-.links-container { display: flex; flex-direction: column; gap: 15px; }
-
-.btn { text-decoration: none; padding: 18px; border-radius: 4px; font-size: 0.9rem; letter-spacing: 2px; text-transform: uppercase; transition: all 0.4s ease; border: 1px solid var(--border); font-family: 'Inter', sans-serif; }
-
-.btn-primary { color: var(--accent); border-color: rgba(212, 163, 115, 0.2); }
-.btn-primary:hover { border-color: var(--accent); background-color: rgba(212, 163, 115, 0.05); }
-
-.social-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+/* 6. BUTONLAR */
+.links-container { display: flex; flex-direction: column; gap: 12px; }
+.btn { text-decoration: none; padding: 15px; border-radius: 50px; font-size: 0.8rem; letter-spacing: 1px; transition: all 0.3s ease; border: 1px solid var(--border); }
+.btn-primary { color: var(--accent); border-color: var(--accent); }
+.btn-primary:hover { background: var(--accent); color: #000; }
+.social-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 .btn-secondary { color: var(--muted); }
 .btn-secondary:first-child { grid-column: span 2; }
-.btn-secondary:hover { color: var(--text); border-color: var(--muted); background-color: rgba(255, 255, 255, 0.03); }
+.btn-secondary:hover { border-color: var(--muted); color: var(--text); }
 
-.divider { margin: 25px 0; position: relative; }
+.divider { margin: 20px 0; position: relative; }
 .divider::before { content: ""; position: absolute; top: 50%; left: 0; width: 100%; height: 1px; background: var(--border); z-index: -1; }
-.divider span { background-color: var(--bg); padding: 0 15px; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; color: rgba(255, 255, 255, 0.2); }
+.divider span { background: var(--bg); padding: 0 15px; font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 2px; }
 
-.trace-text { margin-top: 50px; font-family: 'Crimson Pro', serif; font-size: 0.8rem; font-style: italic; opacity: 0.3; letter-spacing: 1px; }
+.trace-text { margin-top: 40px; font-size: 0.7rem; opacity: 0.3; font-style: italic; }
