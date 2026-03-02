@@ -91,15 +91,29 @@ body {
 }
 #introBtn:hover { border-color: var(--accent); color: var(--text); background: rgba(212, 163, 115, 0.08); }
 
-/* 4. PLAK (Müzik Kontrolü - Main Nizamı) */
+/* 4. PLAK (Müzik Kontrolü - Ortası Delik ve Özel Resimli) */
 .music-control {
     position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px;
     border-radius: 50%; border: 2px solid var(--accent); z-index: 9995;
-background-image: url('./wturuncusaçlıkız.jpg') !important;
+    background-image: url('./kralkaybederse.jpg') !important; /* Yeni resmin */
     background-position: center !important;
     background-size: cover !important;
+    cursor: pointer; box-shadow: 0 0 20px rgba(0,0,0,0.6);
+    /* Delik için içeriği merkeze alıyoruz */
+    display: flex; justify-content: center; align-items: center;
 }
-.music-control.playing { animation: spin 6s linear infinite; } /* Golden Brown için yavaşladı */
+
+/* Plağın Ortasındaki Delik Efekti */
+.music-control::after {
+    content: '';
+    width: 12px; height: 12px;
+    background-color: var(--bg); /* Arka plan siyahı ile aynı renk */
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.15); /* İnce bir parlama */
+    box-shadow: inset 0 0 5px rgba(0,0,0,0.9); /* Gerçek delik hissi */
+}
+
+.music-control.playing { animation: spin 6s linear infinite; } 
 @keyframes spin { 100% { transform: rotate(360deg); } }
 
 /* 5. PROFİL FOTOĞRAFI: MÜHÜR EFEKTİ (Main'den) */
