@@ -66,41 +66,58 @@
         </footer>
     </main>
 
-    <script>
-        const intro = document.getElementById('introScreen');
-        const btn = document.getElementById('introBtn');
-        const music = document.getElementById('bgMusic');
-        const disc = document.getElementById('musicDisc');
-        const main = document.getElementById('main-content');
-        const spotlight = document.querySelector('.spotlight');
+    <link rel="icon" href="./profile.jpg" type="image/jpeg">
 
-        document.addEventListener('mousemove', (e) => {
-            spotlight.style.setProperty('--x', e.clientX + 'px');
-            spotlight.style.setProperty('--y', e.clientY + 'px');
-        });
+<script>
+    const intro = document.getElementById('introScreen');
+    const btn = document.getElementById('introBtn');
+    const music = document.getElementById('bgMusic');
+    const disc = document.getElementById('musicDisc');
+    const main = document.getElementById('main-content');
+    const spotlight = document.querySelector('.spotlight');
 
-        const cursorDot = document.querySelector('[data-cursor-dot]');
-        const cursorOutline = document.querySelector('[data-cursor-outline]');
-        window.addEventListener("mousemove", (e) => {
-            const posX = e.clientX; const posY = e.clientY;
-            cursorDot.style.left = `${posX}px`; cursorDot.style.top = `${posY}px`;
-            cursorOutline.animate({ left: `${posX}px`, top: `${posY}px` }, { duration: 500, fill: "forwards" });
-        });
+    // Fener Efekti
+    document.addEventListener('mousemove', (e) => {
+        spotlight.style.setProperty('--x', e.clientX + 'px');
+        spotlight.style.setProperty('--y', e.clientY + 'px');
+    });
 
-        btn.addEventListener('click', () => {
-            music.volume = 0.2; 
-            music.play();
-            disc.classList.add('playing');
-            intro.classList.add('hide'); 
-            main.classList.add('show');
-            document.body.style.overflow = 'auto'; 
-            setTimeout(() => { intro.remove(); }, 1000);
-        });
+    // Hayalet İmleç
+    const cursorDot = document.querySelector('[data-cursor-dot]');
+    const cursorOutline = document.querySelector('[data-cursor-outline]');
+    window.addEventListener("mousemove", (e) => {
+        const posX = e.clientX; const posY = e.clientY;
+        cursorDot.style.left = `${posX}px`; cursorDot.style.top = `${posY}px`;
+        cursorOutline.animate({ left: `${posX}px`, top: `${posY}px` }, { duration: 500, fill: "forwards" });
+    });
 
-        disc.addEventListener('click', () => {
-            if (music.paused) { music.play(); disc.classList.add('playing'); }
-            else { music.pause(); disc.classList.remove('playing'); }
-        });
-    </script>
+    // Giriş Mekanizması
+    btn.addEventListener('click', () => {
+        music.volume = 0.3; 
+        music.play();
+        disc.classList.add('playing');
+        intro.classList.add('hide'); 
+        main.classList.add('show');
+        document.body.style.overflow = 'auto'; 
+        setTimeout(() => { intro.remove(); }, 1000);
+    });
+
+    // Müzik Kontrolü
+    disc.addEventListener('click', () => {
+        if (music.paused) { music.play(); disc.classList.add('playing'); }
+        else { music.pause(); disc.classList.remove('playing'); }
+    });
+
+    // === SESSİZLİK SENSÖRÜ (YENİ) ===
+    document.addEventListener("visibilitychange", () => {
+        if (document.hidden) {
+            music.pause();
+            disc.classList.remove('playing');
+            document.title = "Sessizlik..."; 
+        } else {
+            document.title = "Berkay Alay — Giriş Kapısı"; 
+        }
+    });
+</script>
 </body>
 </html>
