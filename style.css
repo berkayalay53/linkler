@@ -167,3 +167,36 @@ h1 { font-family: var(--serif); font-weight: 300; letter-spacing: 2px; font-size
 .cursor-dot { width: 5px; height: 5px; background-color: var(--accent); }
 .cursor-outline { width: 30px; height: 30px; border: 1px solid rgba(212, 163, 115, 0.5); }
 @media (max-width: 900px) { .cursor-dot, .cursor-outline { display: none; } }
+/* === GİZLİ FISILTI EFEKTİ === */
+#whisper-quote {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -40%); /* Biraz aşağıdan başlar */
+    font-family: var(--serif);
+    font-size: 1.2rem;
+    font-style: italic;
+    color: var(--accent);
+    text-align: center;
+    width: 90%;
+    max-width: 500px;
+    z-index: 10000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 2s ease; /* Çok yavaş, duman gibi bir geçiş */
+    pointer-events: none;
+    letter-spacing: 2px;
+    text-shadow: 0 0 20px rgba(0, 0, 0, 0.9);
+}
+
+/* Fısıltı Göründüğünde */
+#whisper-quote.show-whisper {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, -50%); /* Yavaşça yukarı süzülür */
+}
+
+/* İmza Tıklanabilir Olduğunu Belli Etsin */
+.signature {
+    cursor: pointer;
+}
