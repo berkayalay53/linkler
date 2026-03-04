@@ -120,6 +120,19 @@
             document.title = "Berkay Alay — Giriş Kapısı"; 
         }
     });
+    // === GİZLİ FISILTI (EASTER EGG) ===
+        const signatureBtn = document.querySelector('.signature');
+        const whisperBox = document.getElementById('whisper-quote');
+
+        if (signatureBtn && whisperBox) {
+            signatureBtn.addEventListener('click', () => {
+                whisperBox.classList.add('show-whisper');
+                // 4 saniye havada asılı kalır, sonra kaybolur
+                setTimeout(() => {
+                    whisperBox.classList.remove('show-whisper');
+                }, 4000); 
+            });
+        }
 </script>
 </body>
 </html>
